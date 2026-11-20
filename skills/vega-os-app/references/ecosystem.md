@@ -31,16 +31,20 @@ Read a sample's code; don't copy its version ranges (they use `~`/`^`).
 
 Amazon's official AI tooling for Vega: an MCP server (`@amazon-devices/amazon-devices-buildertools-mcp`), about a dozen `amazon-devices-vega-*` skills (manifest, performance, focus, media player, navigation, RN upgrade, setup…) plus caption, multi-TV and Android skills, and an optional `adbt-dev` agent. Amazon calls it "the recommended way to use AI coding agents for Vega development". Tools include `search_documentation`, `read_document`, `symbolicate_acr`, `analyze_perfetto_traces`, `get_app_hot_functions`.
 
-Before installing:
+Before installing (checked on 1.0.21 by reading the package):
 
-- **Telemetry:** it sends documentation search queries to Amazon and collects anonymous telemetry; the docs say it can be turned off "in the settings" without naming the setting. Find and disable it, or decide consciously.
-- **Pinning:** Amazon's command uses `@latest`. Pin an exact version instead:
+- **Telemetry:** it uses the Vega SDK telemetry service and honours `"optIn": false` in `~/vega/telemetry/config.json` (the same switch as the SDK). Create that file before the first run.
+- **Hidden network call:** `init-context` runs an unpinned `npx skills` to fetch a community skill; that CLI sends anonymous usage data unless `DO_NOT_TRACK=1` (or `DISABLE_TELEMETRY=1`) is set. Set both.
+- **Pinning:** Amazon's command uses `@latest`, and the MCP entry it writes uses `@latest` too. Pin an exact version in both places:
 
   ```bash
-  npx -y @amazon-devices/amazon-devices-buildertools-mcp@<exact-version> init-context --agent claude-code-cli
+  DO_NOT_TRACK=1 DISABLE_TELEMETRY=1 \
+    npx -y @amazon-devices/amazon-devices-buildertools-mcp@<exact-version> init-context --agent claude-code-cli
   ```
 
-- It writes user-level MCP config and skills; `check-status` and `clean-context` inspect or remove them.
+- **What it writes:** user-level MCP config (`~/.claude.json`), about 20 `amazon-devices-*` skills in `~/.claude/skills`, and a ~260-line steering block in the project's `CLAUDE.md`. To keep them per-project, run it with a throwaway `HOME` and copy the skills into the project's `.claude/skills`, then add a pinned `.mcp.json` entry.
+- **License:** the package is `UNLICENSED` and the skills are under Amazon's Program Materials License: use them, but don't commit them to a public repo.
+- `check-status` and `clean-context` inspect or remove what it installed; `exec --list` shows the tools.
 
 This skill complements ADBT: ADBT gives live API docs and diagnosis; this skill gives the end-to-end workflow, quality gates and release discipline.
 
