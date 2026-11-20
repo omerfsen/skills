@@ -1,0 +1,26 @@
+{
+  "name": "omerfsen-skills",
+  "owner": {
+    "name": "Omer Sen",
+    "url": "https://github.com/omerfsen"
+  },
+  "metadata": {
+    "description": "Public agent skills by Omer Sen",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "vega-os-app",
+      "description": "Build, test, release and publish a React Native TV app for Amazon Fire TV on Vega OS, with quality gates for a fast, stable and secure app",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/vega-os-app"
+      ],
+      "license": "MIT",
+      "homepage": "https://github.com/omerfsen/skills/tree/main/skills/vega-os-app",
+      "keywords": ["vega-os", "fire-tv", "react-native", "amazon-appstore", "tv-apps"],
+      "category": "development"
+    }
+  ]
+}

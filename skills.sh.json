@@ -1,0 +1,10 @@
+{
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "TV apps",
+      "description": "Amazon Fire TV and Vega OS app development",
+      "skills": ["vega-os-app"]
+    }
+  ]
+}
